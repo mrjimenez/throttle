@@ -21,8 +21,8 @@ AC_HEADER_TIME
 AC_C_VOLATILE
 
 dnl Checks for library functions.
-AC_FUNC_MALLOC
-AC_FUNC_REALLOC
+dnl AC_FUNC_MALLOC
+dnl AC_FUNC_REALLOC
 AC_FUNC_STRTOD
 AC_CHECK_FUNCS([clock_gettime gettimeofday memset mkfifo modf])
 AC_SEARCH_LIBS(nanosleep, rt posix4, AC_DEFINE(HAVE_NANOSLEEP, 1,
