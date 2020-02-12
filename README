@@ -1,0 +1,10 @@
+README                throttle - bandwidth limiting pipe
+
+Throttle copies the standard input to the standard output while limiting
+bandwidth to the specified maximum.
+
+Install:
+    ./configure
+    make
+    make install
+

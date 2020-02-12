@@ -1,0 +1,8 @@
+November 10, 2005: Feature Release, throttle 1.2
+    * added dynamic bandwidth control
+    * new periodic statistics messages
+
+July 9, 2004: Maintenance Release, throttle 1.1
+    * improved portability
+
+January 18, 2003: Initial Release, throttle 1.0

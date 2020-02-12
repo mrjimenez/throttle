@@ -1,0 +1,88 @@
+.\" Process this file with
+.\" groff -man -Tascii throttle.1
+.\"
+.TH THROTTLE 1 "NOVEMBER 2005" "User Manuals"
+.SH NAME
+throttle \- bandwidth limiting pipe
+.SH SYNOPSIS
+.B throttle
+.B [\-l
+.I fifo |
+.B \-t
+.I fifo
+.B ]
+.B [\-s
+.I blocksize
+.B ]
+.B [\-w
+.I window
+.B ]
+.B [\-bkmBKM]
+.I limit
+.SH DESCRIPTION
+.B throttle
+copies the standard input to the standard output while limiting
+bandwidth to the specified maximum.
+.SH OPTIONS
+.IP limit
+The bandwidth limit in bits, kilobits, megabits, bytes, kilobytes
+or megabytes per second depending on the options
+.IR \-bkmBKM .
+.IP "\-b, \-k, \-m"
+Set the limit unit to bits, kilobits, or megabits per second.
+.IP "\-B, \-K, \-M"
+Set the limit unit to bytes, kilobytes, or megabytes per second.
+.IP "\-s blocksize"
+Set the I/O block size to blocksize bytes. Initially the block size is 512.
+.IP "\-w window"
+Window of time in seconds used for limit calculation. Initially the window is 60 seconds.
+.IP "\-l fifo"
+Create fifo and listen for change option messages.
+.IP "\-t fifo"
+Transmit options to existing \fBthrottle\fR process.
+.IP \-q
+Run quietly.
+.IP \-v
+Print informational messages to stderr at window intervals.
+.IP \-V
+Print the version number and copyright and exit.
+.IP \-h
+Display help and exit.
+.SH NOTES
+If SIGUSR1 is received by a running \fBthrottle\fR process, it will print
+statistics to stderr without waiting for the next window and regardless of the
+verbose option setting.
+.PP
+If SIGUSR2 is received, the fifo will be checked for option change messages
+without waiting for the next window. 
+.SH EXAMPLES
+.PP
+To limit the bandwidth of a tar back-up to a remote server to 1 Mbit/s, type:
+.sp
+.nf
+$ \fBtar czf - . | throttle -m 1 | ssh host 'tar xzf - -C /bak'\fR
+.sp
+.fi
+.PP
+To start a pipeline which can by dynamically controlled with \fBthrottle\fR:
+.sp
+.nf
+$ \fB... | throttle -l /tmp/throttle.ctl -m 1 | ... &\fR
+.sp
+.fi
+This command will start up \fBthrottle\fR
+communicating through the named fifo /tmp/throttle.ctl. In order to send change options to
+this \fBthrottle\fR process, you would need to run another \fBthrottle\fR command as:
+.sp
+.nf
+$ \fBthrottle -t /tmp/throttle.ctl [OPTIONS TO CHANGE]\fR
+.sp
+.fi
+.RS
+.SH BUGS
+Specifying a bandwidth limit greater than the rate of incoming data
+will not increase the speed of the pipeline.
+.SH AUTHOR
+James Klicman <james at klicman dot org>
+.SH "SEE ALSO"
+.BR dd (1)
