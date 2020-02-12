@@ -132,3 +132,13 @@ all.config
 
 # Kdevelop4
 *.kdev4
+
+Makefile
+autom4te.cache
+compile
+config.h
+config.log
+config.status
+stamp-h
+stamp-h1
+throttle
